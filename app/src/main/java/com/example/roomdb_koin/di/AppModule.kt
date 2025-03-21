@@ -10,19 +10,12 @@ import org.koin.dsl.module
 val appModule = module {
     // Singleton cho AppDatabase
     single {
-        Room.databaseBuilder(
-            androidContext(),
-            AppDatabase::class.java,
-            "user_database"
-        ).build()
+        provideDatabase(androidContext())
     }
-
     // Singleton cho UserDao
-    single { get<AppDatabase>().userDao() }
-
+    single { userDAO(get()) }
     // Singleton cho UserRepository
     single { UserRepository(get()) }
-
     // ViewModel cho UserViewModel
     viewModel { UserViewModel(get()) }
 }
